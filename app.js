@@ -322,7 +322,6 @@ function escapeHtml(str) {
 
 document.addEventListener("DOMContentLoaded", () => {
   el("btn-start").addEventListener("click", startQuiz);
-  el("btn-start-2").addEventListener("click", startQuiz);
   el("btn-history").addEventListener("click", renderHistory);
   el("btn-prev").addEventListener("click", prevQuestion);
   el("btn-next").addEventListener("click", nextQuestion);
