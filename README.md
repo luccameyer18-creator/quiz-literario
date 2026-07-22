@@ -23,11 +23,11 @@ perguntas leves sobre o dia a dia (rolê, crush, treta, redes) e descobre seu
   abre/fecha ao toque, pra não deixar a ficha gigante no celular.
 - **Mobile-first**, pensado pro celular (é onde o público usa).
 
-> **Pendência:** os perfis **Cientista** e **Fofoqueiro** ainda estão com
-> livros provisórios (marcados com `PROVISÓRIO` no `data.js`). Faltou capturar
-> a lista completa desses dois do app original — assim que ela chegar, é só
-> substituir esses blocos. O jeito mais fiel de obter tudo de uma vez é pegar
-> o arquivo `.js` de dados do app original (F12 → Sources) num computador.
+> **Pendência:** os **textos dos 5 perfis** já são do app original. Só o
+> perfil **Cientista** ainda está com **livros provisórios** (marcado com
+> `PROVISÓRIO` no `data.js`) — assim que a lista dele chegar, é só substituir
+> aquele bloco. O jeito mais fiel de obter tudo de uma vez é pegar o arquivo
+> `.js` de dados do app original (F12 → Sources) num computador.
 
 ## Rodar localmente
 

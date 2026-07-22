@@ -3,12 +3,15 @@
    rodar via file:// e na Vercel.
 
    RECONSTRUÇÃO fiel ao app original (quizapp-fumuhksq.manus.space):
-   - Perfis e livros de Romântico, Desbravador e Observador vieram do app
+   - Textos dos 5 perfis vieram do app original.
+   - Livros de Romântico, Desbravador, Observador e Fofoqueiro vieram do app
      original (com ano, nº de páginas e sinopse).
-   - Cientista e Fofoqueiro ainda estão PROVISÓRIOS (marcados abaixo): usam
-     textos/livros parecidos, à espera da lista completa do app original.
-   - Vários livros foram completados com títulos parecidos para dar variedade
-     de fôlego (curto/médio/longo) em cada perfil.
+   - CIENTISTA ainda está PROVISÓRIO (marcado abaixo): usa livros parecidos,
+     à espera da lista do app original.
+   - Vários perfis foram completados com títulos parecidos para dar variedade
+     de fôlego (curto/médio/longo). No app original, a lista do resultado
+     mistura livros entre perfis, então a divisão exata só sai do arquivo de
+     dados original.
 
    Fôlego por nº de páginas: curto (até 150), medio (151–250), longo (251+). */
 
@@ -64,18 +67,18 @@ const PROFILES = {
       "Retratos sociais crus e sem enfeite, histórias que mostram ambientes reais como eles são.",
     exemplos: "Cidade de Deus, The Wire, Breaking Bad.",
   },
-  /* PROVISÓRIO — trocar pelos textos/livros do app original da esposa. */
+  /* Texto ORIGINAL (app da esposa). Livros ainda parcialmente provisórios. */
   GOSSIPER: {
     key: "GOSSIPER",
     name: "Fofoqueiro",
     color: "#8e44ad",
     resultLine:
-      "Você é Fofoqueiro: adora os bastidores — quem está com quem, o jogo de aparências e as disputas de poder.",
+      "Você é Fofoqueiro: os salões, as intrigas e os jogos de poder da alta sociedade são seu terreno favorito — quanto mais escândalo, melhor.",
     sobre:
-      "Curte intriga, status e disputa. A maldade alheia mais diverte do que assusta. Prefere tramas de alta sociedade e vingancinhas bem armadas.",
+      "Vive pelos bastidores da alta sociedade. Interessa-se por status, aparências e jogos de poder. Não julga a maldade, ela o diverte.",
     cinema:
-      "Intrigas da alta sociedade, jogos de poder e uma vingança aqui e ali.",
-    exemplos: "Gossip Girl, The Crown, Bridgerton.",
+      "Intrigas de alta sociedade, jogos de poder, ascensão e vingança nos bastidores.",
+    exemplos: "Gossip Girl, Bridgerton, The Crown, Dangerous Liaisons.",
   },
 };
 
@@ -308,8 +311,15 @@ const BOOKS = [
   { title: "Cidade de Deus", author: "Paulo Lins", year: 1997, profile: "SCIENTIST", stamina: "longo",
     synopsis: "A favela e o crescimento do crime ao longo de anos, com dezenas de personagens. Cru e viciante." },
 
-  /* ===================== FOFOQUEIRO (PROVISÓRIO) ===================== */
-  /* Livros parecidos, do repo. Trocar pela lista do app original da esposa. */
+  /* =========================== FOFOQUEIRO =========================== */
+  /* Texto do perfil é original; livros ainda parcialmente provisórios.
+     Obs.: no app original a lista do resultado mistura livros entre perfis
+     (Quincas Borba, Helena e Memórias de um Sargento também apareceram aqui),
+     então a divisão exata por perfil só sai do arquivo de dados original. */
+  // original (app da esposa) — apareceu no resultado de Fofoqueiro
+  { title: "Guerra dos Mascates", author: "José de Alencar", year: 1873, pages: 290, profile: "GOSSIPER", stamina: "longo",
+    synopsis: "Romance histórico que dramatiza a Revolta dos Mascates ocorrida em Pernambuco em 1710, mostrando o conflito entre comerciantes portugueses e nobres brasileiros." },
+  // complementos parecidos (do repo, tematicamente de intriga/alta sociedade)
   { title: "A Pata da Gazela", author: "José de Alencar", year: 1870, profile: "GOSSIPER", stamina: "curto",
     synopsis: "Vaidade e jogo de conquista na alta sociedade. Uma fofoca fina de época." },
   { title: "Diva", author: "José de Alencar", year: 1864, profile: "GOSSIPER", stamina: "medio",
