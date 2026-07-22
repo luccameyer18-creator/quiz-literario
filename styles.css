@@ -1,5 +1,5 @@
 /* =========================================================================
-   Quiz de Perfil Literário — estilo "papel de livro"
+   Quiz de Perfil Literário. Estilo "papel de livro"
    Estética inspirada no design original: creme/papel, marrom café,
    títulos em Playfair Display (serif) e corpo em Lato.
    ========================================================================= */
@@ -179,7 +179,13 @@ p { margin: 0 0 1em; }
 
 /* =================== RESULTADO =================== */
 .result-head { text-align: center; border-top: 5px solid var(--accent); }
-.result-emoji { font-size: 3.4rem; margin-bottom: 4px; }
+.result-emoji {
+  width: 74px; height: 74px; margin: 4px auto 10px;
+  display: grid; place-items: center;
+  font-family: var(--serif); font-weight: 700; font-size: 2.2rem;
+  border: 2px solid var(--accent); border-radius: 50%;
+  background: var(--card);
+}
 .result-name {
   font-family: var(--serif); font-size: 2.9rem; font-weight: 700;
   letter-spacing: -1px; margin: 4px 0 12px;
@@ -224,7 +230,7 @@ p { margin: 0 0 1em; }
   border-left: 5px solid var(--accent); border-radius: 12px; padding: 13px 15px;
   box-shadow: var(--shadow-sm);
 }
-.history-emoji { font-size: 1.7rem; }
+.history-dot { width: 14px; height: 14px; border-radius: 50%; display: block; }
 .history-info { display: flex; flex-direction: column; }
 .history-info strong { font-family: var(--serif); }
 .history-info span { font-size: 0.86rem; }

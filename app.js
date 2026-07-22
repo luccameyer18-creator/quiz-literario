@@ -1,5 +1,5 @@
 /* =========================================================================
-   Quiz de Perfil Literário — lógica do app (JS puro, sem framework)
+   Quiz de Perfil Literário. Lógica do app (JS puro, sem framework)
    ========================================================================= */
 
 /* ------------------------------ Estado ---------------------------------- */
@@ -29,7 +29,7 @@ function show(screenId) {
 /* ------------------------- Início do quiz ------------------------------- */
 
 function startQuiz() {
-  // Cada pergunta ganha suas alternativas EMBARALHADAS — quebra o padrão
+  // Cada pergunta ganha suas alternativas EMBARALHADAS, quebrando o padrão
   // "letra A = sempre Romântico". O perfil viaja junto de cada opção.
   quiz = {
     questions: QUESTIONS.map((q) => ({ ...q, options: shuffle(q.options) })),
@@ -175,7 +175,7 @@ function recommendBooks(profile, stamina, limit) {
 
 /* ---------------------------- Checkout ---------------------------------- */
 /* "Login" leve no fim, só pra salvar no histórico deste dispositivo.
-   (Sem senha; sem enviar nada pra fora — respeita a privacidade do aluno.) */
+   (Sem senha e sem enviar nada pra fora, respeitando a privacidade do aluno.) */
 
 let pendingResult = null;
 
@@ -233,7 +233,7 @@ function renderHistory() {
       card.className = "history-item";
       card.style.borderLeftColor = p.color;
       card.innerHTML =
-        `<div class="history-emoji">${p.emoji}</div>` +
+        `<span class="history-dot" style="background:${p.color}"></span>` +
         `<div class="history-info">` +
           `<strong>${escapeHtml(item.name)}</strong>` +
           `<span class="muted">${p.name} · ${STAMINA_LABEL[item.stamina]}</span>` +
@@ -259,7 +259,9 @@ function renderResult(result) {
 
   document.documentElement.style.setProperty("--accent", p.color);
 
-  el("result-emoji").textContent = p.emoji;
+  el("result-emoji").textContent = p.name.charAt(0);
+  el("result-emoji").style.color = p.color;
+  el("result-emoji").style.borderColor = p.color;
   el("result-name").textContent = p.name;
   el("result-name").style.color = p.color;
   el("result-tagline").textContent = p.tagline;
@@ -281,7 +283,7 @@ function renderResult(result) {
       const row = document.createElement("div");
       row.className = "bar-row";
       row.innerHTML =
-        `<span class="bar-label">${pr.emoji} ${pr.name}</span>` +
+        `<span class="bar-label">${pr.name}</span>` +
         `<span class="bar-track"><span class="bar-fill" style="width:${pct}%;background:${pr.color}"></span></span>` +
         `<span class="bar-pct">${pct}%</span>`;
       bars.appendChild(row);
@@ -290,7 +292,7 @@ function renderResult(result) {
   // Livros indicados
   const books = recommendBooks(result.winner, result.stamina, 4);
   el("books-title").textContent =
-    `📚 Pra você começar (${STAMINA_LABEL[result.stamina].toLowerCase()})`;
+    `Livros pra você começar (${STAMINA_LABEL[result.stamina].toLowerCase()})`;
   const booksBox = el("result-books");
   booksBox.innerHTML = "";
   books.forEach((b) => {

@@ -17,17 +17,17 @@
     <!-- ===================== HOME ===================== -->
     <section id="screen-home" class="screen active">
       <div class="home">
-        <div class="home-badge">📚 Literatura brasileira</div>
+        <div class="home-badge">Literatura brasileira</div>
         <h1>Descubra sua <span class="grad">identidade literária</span></h1>
         <p class="lead">
-          Você acha que não curte ler? Bora testar. Responde umas paradas sobre o seu rolê,
-          seus crushes e suas tretas — e a gente te diz qual livro brasileiro tem tudo a ver com você.
+          Acha que não gosta de ler? Faz o teste. São perguntas sobre o seu rolê,
+          seus crushes e suas brigas, e no fim a gente diz qual livro brasileiro combina com você.
         </p>
         <div class="home-actions">
           <button id="btn-start" class="btn btn-primary btn-lg">Começar o teste</button>
           <button id="btn-history" class="btn btn-ghost">Ver resultados salvos</button>
         </div>
-        <p class="muted small">Rapidinho: 13 perguntas. Sem login pra começar. 😉</p>
+        <p class="muted small">São 13 perguntas e não precisa de login pra começar.</p>
       </div>
     </section>
 
@@ -52,11 +52,10 @@
     <!-- =================== CHECKOUT =================== -->
     <section id="screen-checkout" class="screen">
       <div class="checkout card">
-        <div class="checkout-emoji">✨</div>
-        <h2>Seu perfil tá pronto!</h2>
+        <h2>Seu perfil está pronto</h2>
         <p class="lead">
-          Quer salvar esse resultado no histórico deste dispositivo?
-          É só colocar seu nome (nada de senha, nada sai do seu aparelho).
+          Quer guardar esse resultado? Coloca seu nome que ele fica salvo aqui
+          neste aparelho. Não pede senha e nada é enviado pra fora.
         </p>
         <input id="checkout-name" class="input" type="text" maxlength="40"
                placeholder="Seu nome ou apelido" autocomplete="off" />
@@ -71,7 +70,7 @@
     <section id="screen-result" class="screen">
       <div class="result">
         <div class="result-head card">
-          <div id="result-emoji" class="result-emoji">❤️</div>
+          <div id="result-emoji" class="result-emoji"></div>
           <p class="muted">Seu perfil literário é</p>
           <h1 id="result-name" class="result-name">Romântico</h1>
           <p id="result-tagline" class="result-tagline"></p>
@@ -86,7 +85,7 @@
         </div>
 
         <div class="card">
-          <h3 id="books-title">📚 Pra você começar</h3>
+          <h3 id="books-title">Livros pra você começar</h3>
           <div id="result-books" class="books"></div>
         </div>
 
@@ -101,7 +100,7 @@
     <section id="screen-history" class="screen">
       <div class="history">
         <h2>Resultados salvos</h2>
-        <p class="muted small">Salvos apenas neste dispositivo (navegador).</p>
+        <p class="muted small">Ficam salvos só aqui neste navegador.</p>
         <div id="history-list" class="history-list"></div>
         <div class="result-actions">
           <button id="btn-history-back" class="btn btn-primary">Voltar</button>
@@ -111,7 +110,7 @@
     </section>
 
     <footer class="app-footer muted small">
-      Feito para incentivar a leitura entre jovens · Literatura brasileira
+      Bons livros pra quem ainda acha que não gosta de ler.
     </footer>
   </div>
 
