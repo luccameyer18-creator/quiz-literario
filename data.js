@@ -2,21 +2,19 @@
    Perfis, perguntas e livros. Variáveis globais (sem módulos) para
    rodar via file:// e na Vercel.
 
-   RECONSTRUÇÃO fiel ao app original (quizapp-fumuhksq.manus.space):
-   - Textos dos 5 perfis vieram do app original.
-   - Livros de Romântico, Desbravador, Observador e Fofoqueiro vieram do app
-     original (com ano, nº de páginas e sinopse).
-   - CIENTISTA ainda está PROVISÓRIO (marcado abaixo): usa livros parecidos,
-     à espera da lista do app original.
-   - Vários perfis foram completados com títulos parecidos para dar variedade
-     de fôlego (curto/médio/longo). No app original, a lista do resultado
-     mistura livros entre perfis, então a divisão exata só sai do arquivo de
-     dados original.
+   Base: app original (quizapp-fumuhksq.manus.space).
+   - Os textos dos 5 perfis vieram do app original.
+   - Vários livros de cada perfil vieram do app original (marcados "// original"),
+     com ano, nº de páginas e sinopse.
+   - Alguns títulos parecidos foram acrescentados só para dar variedade de
+     fôlego (curto/médio/longo). No app original a lista do resultado mistura
+     livros entre perfis; aqui cada livro fica num perfil só.
+   - Tom das telas (home, botões, seções): mais chique, jovem e fofoqueiro.
 
    Fôlego por nº de páginas: curto (até 150), medio (151–250), longo (251+). */
 
-/* Perfis. As cores têm bom contraste sobre o fundo claro (legibilidade no
-   celular). Cada perfil tem: linha do resultado, "sobre", cinema e exemplos. */
+/* Perfis. Cores com bom contraste sobre o fundo claro (legibilidade no
+   celular). Cada perfil: linha do resultado, "sobre", cinema e exemplos. */
 const PROFILES = {
   ROMANTIC: {
     key: "ROMANTIC",
@@ -54,20 +52,18 @@ const PROFILES = {
       "Dramas psicológicos com ironia e personagens ambíguos, narrativas que analisam a hipocrisia social.",
     exemplos: "Succession, Fleabag, filmes de Woody Allen, Big Little Lies.",
   },
-  /* PROVISÓRIO — trocar pelos textos/livros do app original da esposa. */
   SCIENTIST: {
     key: "SCIENTIST",
     name: "Cientista",
     color: "#1565a6",
     resultLine:
-      "Você é Cientista: encara a vida como quem estuda, querendo entender por que as pessoas e o mundo funcionam como funcionam.",
+      "Você é Cientista: prefere olhar a sociedade sob a lente do microscópio, encarando de frente as verdades mais duras da natureza humana.",
     sobre:
-      "Observa a realidade sem desviar das verdades difíceis. Prefere retratos crus e histórias que explicam o comportamento humano e social.",
+      "Encara a literatura como um laboratório social. Interessa-se pelo determinismo — como o meio e a época moldam o indivíduo.",
     cinema:
-      "Retratos sociais crus e sem enfeite, histórias que mostram ambientes reais como eles são.",
-    exemplos: "Cidade de Deus, The Wire, Breaking Bad.",
+      "Ficção social crua, retrato implacável de ambientes degradados e determinismo social.",
+    exemplos: "Cidade de Deus, The Wire, Trainspotting, Breaking Bad.",
   },
-  /* Texto ORIGINAL (app da esposa). Livros ainda parcialmente provisórios. */
   GOSSIPER: {
     key: "GOSSIPER",
     name: "Fofoqueiro",
@@ -219,43 +215,35 @@ const QUESTIONS = [
 
 /* Livros. Campos: title, author, year, pages (opcional), profile, stamina, synopsis.
    stamina: curto (até ~150 pág), medio (~151 a 250), longo (251+).
-   Marcados com "// original" vieram do app da esposa (com sinopse dela). */
+   "// original" = veio do app da esposa (com a sinopse dela). */
 const BOOKS = [
   /* ============================ ROMÂNTICO ============================ */
-  // original (app da esposa)
-  { title: "Cinco Minutos", author: "José de Alencar", year: 1856, pages: 80, profile: "ROMANTIC", stamina: "curto",
-    synopsis: "O narrador relata como um atraso de apenas cinco minutos para tomar um ônibus em direção ao Andaraí mudou completamente sua vida. No veículo, ele conhece uma mulher misteriosa, Carlota, cujo rosto permanece oculto sob um véu por grande parte da trama. O mistério que a envolve deve-se a uma “fatalidade”: uma doença grave (tuberculose) que a faz evitar o compromisso amoroso para poupar o amado do sofrimento. Após perseguições românticas que os levam até a Europa, o casal consegue encontrar a felicidade, provando como um pequeno grão de areia no destino pode ser decisivo." },
-  { title: "Encarnação", author: "José de Alencar", year: 1893, pages: 104, profile: "ROMANTIC", stamina: "curto",
+  { title: "Cinco Minutos", author: "José de Alencar", year: 1856, pages: 80, profile: "ROMANTIC", stamina: "curto", // original
+    synopsis: "O narrador relata como um atraso de apenas cinco minutos para tomar um ônibus em direção ao Andaraí mudou completamente sua vida. No veículo, ele conhece uma mulher misteriosa, Carlota, cujo rosto permanece oculto sob um véu por grande parte da trama. O mistério que a envolve deve-se a uma “fatalidade”: uma doença grave que a faz evitar o compromisso amoroso para poupar o amado do sofrimento. Após perseguições românticas que os levam até a Europa, o casal consegue encontrar a felicidade, provando como um pequeno grão de areia no destino pode ser decisivo." },
+  { title: "Encarnação", author: "José de Alencar", year: 1893, pages: 104, profile: "ROMANTIC", stamina: "curto", // original
     synopsis: "Publicado postumamente. A história de Hermano, um viúvo obcecado pela memória de sua esposa morta (Julieta), e como sua nova esposa (Amália) precisa superar a “encarnação” dessa memória." },
-  { title: "A Viuvinha", author: "José de Alencar", year: 1857, pages: 112, profile: "ROMANTIC", stamina: "curto",
-    synopsis: "Conta a história de Jorge, um jovem rico que, após ser levado à ruína financeira e à desonra por sua vida dissipada, decide forjar o próprio suicídio na véspera de seu casamento. Sua noiva, Carolina, passa a ser conhecida como a “Viuvinha”, mantendo-se fiel à memória do marido. Jorge, sob a identidade oculta de Carlos, trabalha arduamente para recuperar sua fortuna e honra, observando de longe o sofrimento da amada até que possa finalmente revelar-se e reuni-los." },
-  { title: "O Garatuja (Alfarrábios)", author: "José de Alencar", year: 1873, pages: 128, profile: "ROMANTIC", stamina: "curto",
-    synopsis: "Crônica da época colonial. O Garatuja é um romancete que conta a história do jovem Ivo, um grafiteiro no Rio de Janeiro colonial, e seu romance com a jovem Marta." },
-  // complementos parecidos (do repo, pra dar variedade de fôlego)
+  { title: "A Viuvinha", author: "José de Alencar", year: 1857, pages: 112, profile: "ROMANTIC", stamina: "curto", // original
+    synopsis: "Jorge, um jovem rico levado à ruína e à desonra, decide forjar o próprio suicídio na véspera do casamento. Sua noiva, Carolina, passa a ser conhecida como a “Viuvinha”, fiel à memória do marido. Jorge, sob a identidade oculta de Carlos, trabalha para recuperar fortuna e honra, observando de longe o sofrimento da amada até poder revelar-se e reuni-los." },
+  { title: "O Garatuja (Alfarrábios)", author: "José de Alencar", year: 1873, pages: 128, profile: "ROMANTIC", stamina: "curto", // original
+    synopsis: "Crônica da época colonial. Um romancete que conta a história do jovem Ivo, um grafiteiro no Rio de Janeiro colonial, e seu romance com a jovem Marta." },
   { title: "Noite na Taverna", author: "Álvares de Azevedo", year: 1855, profile: "ROMANTIC", stamina: "curto",
-    synopsis: "Cinco amigos numa taverna contam histórias de amor e morte. Tem um clima sombrio no meio do romance." },
+    synopsis: "Cinco amigos numa taverna contam histórias de amor e morte. Um clima sombrio e febril no meio do romance." },
   { title: "A Moreninha", author: "Joaquim Manuel de Macedo", year: 1844, profile: "ROMANTIC", stamina: "medio",
     synopsis: "Uns jovens passam um fim de semana numa ilha e rola uma aposta sobre quem se apaixona primeiro." },
-  { title: "A Escrava Isaura", author: "Bernardo Guimarães", year: 1875, profile: "ROMANTIC", stamina: "medio",
-    synopsis: "Isaura foi criada quase como filha da casa, mas segue escravizada e luta pela liberdade e por um amor. Virou novela." },
-  { title: "Lucíola", author: "José de Alencar", year: 1862, profile: "ROMANTIC", stamina: "medio",
-    synopsis: "Um rapaz se apaixona por uma mulher que a sociedade julga o tempo todo. Um amor que enfrenta muito preconceito." },
   { title: "Amar, Verbo Intransitivo", author: "Mário de Andrade", year: 1927, profile: "ROMANTIC", stamina: "medio",
     synopsis: "Uma família contrata uma professora pra “ensinar o amor” ao filho adolescente. Fala de desejo e das regras hipócritas da época." },
   { title: "Til", author: "José de Alencar", year: 1872, profile: "ROMANTIC", stamina: "longo",
     synopsis: "Paixão, ciúme e reviravolta na vida do interior. Tem cara de novela mesmo." },
 
   /* =========================== DESBRAVADOR =========================== */
-  // original (app da esposa)
-  { title: "O Guarani", author: "José de Alencar", year: 1857, pages: 241, profile: "ADVENTURER", stamina: "medio",
-    synopsis: "Marco do indianismo, foca na figura de Peri, um índio Goytacaz de nobreza excepcional que dedica sua vida à proteção de Cecília (“Ceci”), filha do fidalgo português D. Antônio de Mariz. Ambientado na Serra dos Órgãos, o enredo envolve conflitos contra a tribo dos Aymorés e as traições de aventureiros dentro da própria casa de Mariz. No desfecho épico, durante uma inundação, Peri e Cecília são os únicos sobreviventes, flutuando em uma palmeira como uma reedição do mito do dilúvio." },
-  { title: "Iracema", author: "José de Alencar", year: 1865, pages: 168, profile: "ADVENTURER", stamina: "medio",
-    synopsis: "Descrita como uma “lenda do Ceará”, a obra narra o amor proibido entre Iracema, a virgem dos lábios de mel e guardiã do segredo da Jurema, e o guerreiro branco Martim. O relacionamento causa o afastamento de Iracema de sua tribo, os Tabajaras, e a une aos inimigos Pitiguaras, liderados por Poty, irmão de armas de Martim. O filho do casal, Moacyr, nasce da dor, simbolizando o surgimento do povo cearense a partir do encontro de duas raças." },
-  { title: "O Tronco do Ipê", author: "José de Alencar", year: 1872, pages: 247, profile: "ADVENTURER", stamina: "medio",
+  { title: "O Guarani", author: "José de Alencar", year: 1857, pages: 241, profile: "ADVENTURER", stamina: "medio", // original
+    synopsis: "Marco do indianismo, foca na figura de Peri, um índio Goytacaz de nobreza excepcional que dedica sua vida à proteção de Cecília (“Ceci”), filha do fidalgo português D. Antônio de Mariz. Ambientado na Serra dos Órgãos, o enredo envolve conflitos contra a tribo dos Aymorés e traições dentro da própria casa de Mariz. No desfecho épico, durante uma inundação, Peri e Cecília são os únicos sobreviventes, flutuando numa palmeira como uma reedição do mito do dilúvio." },
+  { title: "Iracema", author: "José de Alencar", year: 1865, pages: 168, profile: "ADVENTURER", stamina: "medio", // original
+    synopsis: "Descrita como uma “lenda do Ceará”, narra o amor proibido entre Iracema, a virgem dos lábios de mel e guardiã do segredo da Jurema, e o guerreiro branco Martim. O romance afasta Iracema de sua tribo, os Tabajaras, e a une aos inimigos Pitiguaras. O filho do casal, Moacyr, nasce da dor, simbolizando o surgimento do povo cearense a partir do encontro de duas raças." },
+  { title: "O Tronco do Ipê", author: "José de Alencar", year: 1872, pages: 247, profile: "ADVENTURER", stamina: "medio", // original
     synopsis: "Romance regionalista da segunda fase de Alencar. A história de Mário, um menino assombrado que busca vingança ligada ao tronco de um ipê, onde supostamente está o segredo de sua família." },
-  { title: "Inocência", author: "Visconde de Taunay", year: 1872, pages: 289, profile: "ADVENTURER", stamina: "longo",
-    synopsis: "Um clássico da literatura regionalista. Conta a história de Inocência, uma jovem sertaneja que é forçada a um casamento arranjado, e seu amor pelo engenheiro Cirino." },
-  // complementos parecidos (do repo)
+  { title: "Inocência", author: "Visconde de Taunay", year: 1872, pages: 289, profile: "ADVENTURER", stamina: "longo", // original
+    synopsis: "Um clássico da literatura regionalista. Conta a história de Inocência, uma jovem sertaneja forçada a um casamento arranjado, e seu amor pelo engenheiro Cirino." },
   { title: "Vidas Secas", author: "Graciliano Ramos", year: 1938, profile: "ADVENTURER", stamina: "curto",
     synopsis: "Uma família foge da seca quase sem nada e tenta sobreviver no sertão. Curto e muito forte." },
   { title: "Contos Gauchescos", author: "Simões Lopes Neto", year: 1912, profile: "ADVENTURER", stamina: "curto",
@@ -263,79 +251,71 @@ const BOOKS = [
   { title: "O Quinze", author: "Rachel de Queiroz", year: 1930, profile: "ADVENTURER", stamina: "medio",
     synopsis: "A seca de 1915 obriga uma família a largar tudo e migrar. Fala de coragem e de perder pelo caminho." },
   { title: "Sagarana", author: "Guimarães Rosa", year: 1946, profile: "ADVENTURER", stamina: "longo",
-    synopsis: "Contos do sertão com briga, viagem e causo. É um bom jeito de começar a ler Guimarães Rosa." },
+    synopsis: "Contos do sertão com briga, viagem e causo. Um bom jeito de começar a ler Guimarães Rosa." },
   { title: "Os Sertões", author: "Euclides da Cunha", year: 1902, profile: "ADVENTURER", stamina: "longo",
     synopsis: "O relato da Guerra de Canudos e da vida dura no sertão. Denso, mas impressiona." },
   { title: "Grande Sertão: Veredas", author: "Guimarães Rosa", year: 1956, profile: "ADVENTURER", stamina: "longo",
     synopsis: "Um antigo jagunço conta sua vida, seus amores e um pacto com o diabo. É difícil, mas é considerado o maior livro brasileiro." },
 
   /* =========================== OBSERVADOR =========================== */
-  // original (app da esposa)
-  { title: "Lésbia", author: "Maria Benedita Bormann (Délia)", year: 1890, pages: 106, profile: "OBSERVER", stamina: "curto",
+  { title: "Lésbia", author: "Maria Benedita Bormann (Délia)", year: 1890, pages: 106, profile: "OBSERVER", stamina: "curto", // original
     synopsis: "Romance que acompanha Arabela (Bela), jovem inteligente que, após um matrimônio marcado por maus tratos e uma separação aos dezenove anos, enfrenta a sociedade para viver conforme o próprio desejo." },
-  { title: "Ressurreição", author: "Machado de Assis", year: 1872, pages: 120, profile: "OBSERVER", stamina: "curto",
+  { title: "Ressurreição", author: "Machado de Assis", year: 1872, pages: 120, profile: "OBSERVER", stamina: "curto", // original
     synopsis: "O primeiro romance de Machado de Assis. Um drama psicológico sobre Félix, um homem cético que duvida do amor de Lúcia e teme ser traído novamente." },
-  { title: "O Seminarista", author: "Bernardo Guimarães", year: 1872, pages: 160, profile: "OBSERVER", stamina: "medio",
+  { title: "O Seminarista", author: "Bernardo Guimarães", year: 1872, pages: 160, profile: "OBSERVER", stamina: "medio", // original
     synopsis: "Romance regionalista mineiro que narra o conflito de Eugênio entre seu amor por Margarida e o celibato forçado ao ser enviado ao seminário." },
-  { title: "A Mão e a Luva", author: "Machado de Assis", year: 1874, pages: 160, profile: "OBSERVER", stamina: "medio",
+  { title: "A Mão e a Luva", author: "Machado de Assis", year: 1874, pages: 160, profile: "OBSERVER", stamina: "medio", // original
     synopsis: "Uma crônica de costumes onde o autor analisa o comportamento de Guiomar, uma jovem ambiciosa e elegante que busca ascensão social através de casamentos estratégicos." },
-  { title: "Helena", author: "Machado de Assis", year: 1876, pages: 280, profile: "OBSERVER", stamina: "longo",
+  { title: "Helena", author: "Machado de Assis", year: 1876, pages: 280, profile: "OBSERVER", stamina: "longo", // original
     synopsis: "O drama de Helena, uma jovem de origem humilde descoberta pelo Conselheiro Vale, que a reconhece como filha e a introduz na alta sociedade, gerando conflito de classe e amores não correspondidos." },
-  { title: "Memórias de um Sargento de Milícias", author: "Manuel Antônio de Almeida", year: 1854, pages: 272, profile: "OBSERVER", stamina: "longo",
-    synopsis: "Obra picaresca que retrata os costumes do Rio de Janeiro no “tempo do rei” (D. João VI). Narra a vida de Leonardo, filho de imigrantes portugueses, cujas travessuras o acompanham desde o nascimento. A narrativa descreve sua educação indisciplinada e os constantes problemas com a ordem pública, personificada pelo Major Vidigal. Apesar de sua vida errante, o protagonista acaba elevado ao posto de sargento e se casa, alcançando uma estabilidade social inesperada." },
-  { title: "A Mortalha de Alzira", author: "Aluísio Azevedo", year: 1894, pages: 280, profile: "OBSERVER", stamina: "longo",
+  { title: "Memórias de um Sargento de Milícias", author: "Manuel Antônio de Almeida", year: 1854, pages: 272, profile: "OBSERVER", stamina: "longo", // original
+    synopsis: "Obra picaresca que retrata os costumes do Rio de Janeiro no “tempo do rei” (D. João VI). Narra a vida de Leonardo, filho de imigrantes portugueses, cujas travessuras o acompanham desde o nascimento. Apesar da vida errante, o protagonista acaba elevado ao posto de sargento e se casa, alcançando uma estabilidade social inesperada." },
+  { title: "A Mortalha de Alzira", author: "Aluísio Azevedo", year: 1894, pages: 280, profile: "OBSERVER", stamina: "longo", // original
     synopsis: "Romance fantástico e naturalista. A história da baronesa de Santarém, obcecada em ressuscitar sua filha Alzira, usando métodos macabros e explorando os limites da ciência e da loucura." },
-  { title: "Memórias Póstumas de Brás Cubas", author: "Machado de Assis", year: 1881, pages: 368, profile: "OBSERVER", stamina: "longo",
-    synopsis: "Inova ao apresentar um “defunto autor”, Brás Cubas, que escreve suas memórias a partir do túmulo. Com um tom irônico e pessimista, ele analisa seus fracassos amorosos (como o caso com Virgília), sua falta de propósito e a mediocridade de sua classe social. A obra introduz a filosofia do “Humanitismo”, que tenta justificar as mazelas da vida por meio de uma lógica rigorosa, mas cômica." },
-  { title: "Quincas Borba", author: "Machado de Assis", year: 1891, pages: 400, profile: "OBSERVER", stamina: "longo",
-    synopsis: "Dá continuidade às ideias machadianas através de Rubião, um ingênuo professor que herda a fortuna e o cachorro (também chamado Quincas Borba) do filósofo de mesmo nome. Ao mudar-se para o Rio de Janeiro, ele se torna alvo da ambição do casal Cristiano Palha e Sofia. Rubião acaba perdendo a sanidade e a riqueza, imerso em delírios de grandeza, enquanto Sofia manipula seus afetos para ganho próprio." },
+  { title: "Memórias Póstumas de Brás Cubas", author: "Machado de Assis", year: 1881, pages: 368, profile: "OBSERVER", stamina: "longo", // original
+    synopsis: "Inova ao apresentar um “defunto autor”, Brás Cubas, que escreve suas memórias a partir do túmulo. Com tom irônico e pessimista, analisa seus fracassos amorosos, sua falta de propósito e a mediocridade de sua classe social. Introduz a filosofia cômica do “Humanitismo”." },
+  { title: "Quincas Borba", author: "Machado de Assis", year: 1891, pages: 400, profile: "OBSERVER", stamina: "longo", // original
+    synopsis: "Rubião, um ingênuo professor, herda a fortuna e o cachorro do filósofo Quincas Borba. No Rio de Janeiro, torna-se alvo da ambição do casal Cristiano Palha e Sofia. Rubião acaba perdendo a sanidade e a riqueza, imerso em delírios de grandeza, enquanto Sofia manipula seus afetos para ganho próprio." },
 
-  /* ===================== CIENTISTA (PROVISÓRIO) ===================== */
-  /* Livros parecidos, do repo. Trocar pela lista do app original da esposa. */
+  /* ============================ CIENTISTA ============================ */
+  { title: "A Escrava Isaura", author: "Bernardo Guimarães", year: 1875, pages: 176, profile: "SCIENTIST", stamina: "medio", // original
+    synopsis: "Um dos romances abolicionistas mais importantes. A história de Isaura, uma escrava de pele branca e educação refinada, que sofre com a maldade de seu senhor e o amor obsessivo do filho deste." },
+  { title: "Gazel", author: "Luiza Leonardo", year: 1881, pages: 120, profile: "SCIENTIST", stamina: "curto", // original
+    synopsis: "Romance-folhetim publicado em 1881. Acompanha Gazel, jovem da elite carioca criada entre luxo e música. Após a morte do pai e a ruína financeira, muda-se para Lisboa e é forçada a um casamento sem afeto. A obra critica a opressão feminina e as convenções sociais do século XIX, denunciando a violência contra mulheres consideradas de caráter desviante." },
+  { title: "Casa de Pensão", author: "Aluísio Azevedo", year: 1882, pages: 236, profile: "SCIENTIST", stamina: "medio", // original
+    synopsis: "Romance naturalista que narra a queda moral e social de Amâncio, um jovem ingênuo do interior que, ao chegar ao Rio de Janeiro, se apaixona por Madame Brizard, sua hospedeira e amante." },
+  { title: "Memórias de um Condenado", author: "Aluísio Azevedo", year: 1884, pages: 280, profile: "SCIENTIST", stamina: "longo", // original
+    synopsis: "Mais tarde renomeado para A Condessa Vésper. A história de Luís, um jovem provinciano dividido entre o amor puro por uma camponesa e o amor carnal e destrutivo por uma mulher sofisticada." },
   { title: "Bom-Crioulo", author: "Adolfo Caminha", year: 1895, profile: "SCIENTIST", stamina: "curto",
     synopsis: "Um marinheiro se apaixona por um grumete no Brasil do século XIX. Foi ousado demais pra época." },
   { title: "O Cortiço", author: "Aluísio Azevedo", year: 1890, profile: "SCIENTIST", stamina: "medio",
     synopsis: "A vida de um cortiço inteiro, com todo mundo se misturando e afundando junto. O clássico do naturalismo." },
-  { title: "Casa de Pensão", author: "Aluísio Azevedo", year: 1884, profile: "SCIENTIST", stamina: "medio",
-    synopsis: "Um jovem vai pra capital cheio de sonho e a cidade grande vai acabando com ele." },
-  { title: "O Ateneu", author: "Raul Pompeia", year: 1888, profile: "SCIENTIST", stamina: "medio",
-    synopsis: "A rotina dura de um internato pelos olhos de um garoto. Mostra como o ambiente molda a pessoa." },
-  { title: "São Bernardo", author: "Graciliano Ramos", year: 1934, profile: "SCIENTIST", stamina: "medio",
-    synopsis: "Um fazendeiro trata tudo como negócio, até o casamento, e vê a vida desmoronar. Seco e direto." },
   { title: "Quarto de Despejo", author: "Carolina Maria de Jesus", year: 1960, profile: "SCIENTIST", stamina: "medio",
     synopsis: "O diário de verdade de uma mulher que catava lixo pra sobreviver na favela dos anos 60. Difícil ficar indiferente." },
-  { title: "O Mulato", author: "Aluísio Azevedo", year: 1881, profile: "SCIENTIST", stamina: "longo",
-    synopsis: "Um homem volta pra cidade natal e esbarra no racismo e na hipocrisia de todo mundo. Corajoso pra época." },
   { title: "Angústia", author: "Graciliano Ramos", year: 1936, profile: "SCIENTIST", stamina: "longo",
     synopsis: "A cabeça de um homem sendo tomada pelo ciúme e pela frustração. Um livro sufocante, no bom sentido." },
   { title: "Cidade de Deus", author: "Paulo Lins", year: 1997, profile: "SCIENTIST", stamina: "longo",
     synopsis: "A favela e o crescimento do crime ao longo de anos, com dezenas de personagens. Cru e viciante." },
 
   /* =========================== FOFOQUEIRO =========================== */
-  /* Texto do perfil é original; livros ainda parcialmente provisórios.
-     Obs.: no app original a lista do resultado mistura livros entre perfis
-     (Quincas Borba, Helena e Memórias de um Sargento também apareceram aqui),
-     então a divisão exata por perfil só sai do arquivo de dados original. */
-  // original (app da esposa) — apareceu no resultado de Fofoqueiro
-  { title: "Guerra dos Mascates", author: "José de Alencar", year: 1873, pages: 290, profile: "GOSSIPER", stamina: "longo",
+  { title: "Guerra dos Mascates", author: "José de Alencar", year: 1873, pages: 290, profile: "GOSSIPER", stamina: "longo", // original
     synopsis: "Romance histórico que dramatiza a Revolta dos Mascates ocorrida em Pernambuco em 1710, mostrando o conflito entre comerciantes portugueses e nobres brasileiros." },
-  // complementos parecidos (do repo, tematicamente de intriga/alta sociedade)
+  { title: "D. Narcisa de Villar", author: "Ana Luísa de Azevedo Castro", year: 1859, pages: 235, profile: "GOSSIPER", stamina: "medio", // original
+    synopsis: "Uma das primeiras obras literárias publicadas por uma mulher no Brasil. Narra a vida e as agruras de D. Narcisa, uma mulher forte e determinada no contexto colonial e do Império." },
+  { title: "Lucíola", author: "José de Alencar", year: 1862, pages: 132, profile: "GOSSIPER", stamina: "curto", // original
+    synopsis: "O primeiro da série de romances urbanos de Alencar. A história de Lúcia, uma cortesã de alto nível no Rio de Janeiro, e seu romance com o jornalista Paulo Dias." },
+  { title: "Diva", author: "José de Alencar", year: 1864, pages: 144, profile: "GOSSIPER", stamina: "curto", // original
+    synopsis: "Narrado por Emílio, conta a história de sua paixão pela bela e esnobe Guida, uma moça da alta sociedade que o despreza inicialmente." },
   { title: "A Pata da Gazela", author: "José de Alencar", year: 1870, profile: "GOSSIPER", stamina: "curto",
     synopsis: "Vaidade e jogo de conquista na alta sociedade. Uma fofoca fina de época." },
-  { title: "Diva", author: "José de Alencar", year: 1864, profile: "GOSSIPER", stamina: "medio",
-    synopsis: "A vida e os caprichos de uma mulher rica que sobe na sociedade. Muito jogo de aparência." },
   { title: "A Normalista", author: "Adolfo Caminha", year: 1893, profile: "GOSSIPER", stamina: "medio",
     synopsis: "Um escândalo numa cidade pequena e toda a hipocrisia em volta. O tipo de história que vira fofoca." },
-  { title: "A Falência", author: "Júlia Lopes de Almeida", year: 1901, profile: "GOSSIPER", stamina: "longo",
-    synopsis: "Uma família rica começa a afundar e os segredos vão aparecendo. Dinheiro, aparência e disfarce." },
   { title: "Senhora", author: "José de Alencar", year: 1875, profile: "GOSSIPER", stamina: "longo",
     synopsis: "Uma mulher usa a própria fortuna pra comprar o noivo que a humilhou e se vingar. Casamento tratado como negócio." },
+  { title: "A Falência", author: "Júlia Lopes de Almeida", year: 1901, profile: "GOSSIPER", stamina: "longo",
+    synopsis: "Uma família rica começa a afundar e os segredos vão aparecendo. Dinheiro, aparência e disfarce." },
   { title: "A Sucessora", author: "Carolina Nabuco", year: 1934, profile: "GOSSIPER", stamina: "longo",
     synopsis: "Uma segunda esposa vive na sombra da primeira dentro de uma mansão cheia de ciúme. Inspirou “Rebecca”." },
-  { title: "Fogo Morto", author: "José Lins do Rego", year: 1943, profile: "GOSSIPER", stamina: "longo",
-    synopsis: "A queda dos velhos engenhos e as intrigas das famílias importantes. Muita gente falando pelas costas." },
-  { title: "A Marquesa de Santos", author: "Paulo Setúbal", year: 1925, profile: "GOSSIPER", stamina: "longo",
-    synopsis: "Poder, romance e fofoca na corte de Dom Pedro I. A intriga chegando dentro do palácio." },
   { title: "Esaú e Jacó", author: "Machado de Assis", year: 1904, profile: "GOSSIPER", stamina: "longo",
     synopsis: "Dois irmãos gêmeos que discordam de tudo, até de política e de amor. Vaidade e disputa sem parar." },
 ];
