@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz de Perfil Literário</title>
+  <meta name="description" content="Descubra seu perfil literário e que livro da literatura brasileira combina com você." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ===================== HOME ===================== -->
+    <section id="screen-home" class="screen active">
+      <div class="home">
+        <div class="home-badge">📚 Literatura brasileira</div>
+        <h1>Descubra sua <span class="grad">identidade literária</span></h1>
+        <p class="lead">
+          Você acha que não curte ler? Bora testar. Responde umas paradas sobre o seu rolê,
+          seus crushes e suas tretas — e a gente te diz qual livro brasileiro tem tudo a ver com você.
+        </p>
+        <div class="home-actions">
+          <button id="btn-start" class="btn btn-primary btn-lg">Começar o teste</button>
+          <button id="btn-history" class="btn btn-ghost">Ver resultados salvos</button>
+        </div>
+        <p class="muted small">Rapidinho: 13 perguntas. Sem login pra começar. 😉</p>
+      </div>
+    </section>
+
+    <!-- ===================== QUIZ ===================== -->
+    <section id="screen-quiz" class="screen">
+      <div class="quiz">
+        <div class="quiz-top">
+          <span id="progress-text" class="muted">Pergunta 1 de 13</span>
+          <div class="progress-bar"><div id="progress-bar-fill" class="progress-bar-fill"></div></div>
+        </div>
+
+        <h2 id="question-text" class="question"></h2>
+        <div id="options" class="options"></div>
+
+        <div class="quiz-nav">
+          <button id="btn-prev" class="btn btn-ghost">Anterior</button>
+          <button id="btn-next" class="btn btn-primary">Próxima</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== CHECKOUT =================== -->
+    <section id="screen-checkout" class="screen">
+      <div class="checkout card">
+        <div class="checkout-emoji">✨</div>
+        <h2>Seu perfil tá pronto!</h2>
+        <p class="lead">
+          Quer salvar esse resultado no histórico deste dispositivo?
+          É só colocar seu nome (nada de senha, nada sai do seu aparelho).
+        </p>
+        <input id="checkout-name" class="input" type="text" maxlength="40"
+               placeholder="Seu nome ou apelido" autocomplete="off" />
+        <div class="checkout-actions">
+          <button id="btn-save-result" class="btn btn-primary btn-lg">Salvar e ver resultado</button>
+          <button id="btn-skip-save" class="btn btn-ghost">Só ver o resultado</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RESULTADO ==================== -->
+    <section id="screen-result" class="screen">
+      <div class="result">
+        <div class="result-head card">
+          <div id="result-emoji" class="result-emoji">❤️</div>
+          <p class="muted">Seu perfil literário é</p>
+          <h1 id="result-name" class="result-name">Romântico</h1>
+          <p id="result-tagline" class="result-tagline"></p>
+          <p id="result-description" class="result-description"></p>
+          <p id="result-vibe" class="result-vibe"></p>
+          <p id="result-cinema" class="result-cinema"></p>
+        </div>
+
+        <div class="card">
+          <h3>Sua mistura de perfis</h3>
+          <div id="result-bars" class="bars"></div>
+        </div>
+
+        <div class="card">
+          <h3 id="books-title">📚 Pra você começar</h3>
+          <div id="result-books" class="books"></div>
+        </div>
+
+        <div class="result-actions">
+          <button id="btn-retry" class="btn btn-primary">Refazer o teste</button>
+          <button id="btn-home" class="btn btn-ghost">Voltar ao início</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== HISTÓRICO ==================== -->
+    <section id="screen-history" class="screen">
+      <div class="history">
+        <h2>Resultados salvos</h2>
+        <p class="muted small">Salvos apenas neste dispositivo (navegador).</p>
+        <div id="history-list" class="history-list"></div>
+        <div class="result-actions">
+          <button id="btn-history-back" class="btn btn-primary">Voltar</button>
+          <button id="btn-clear-history" class="btn btn-ghost">Limpar histórico</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="app-footer muted small">
+      Feito para incentivar a leitura entre jovens · Literatura brasileira
+    </footer>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
