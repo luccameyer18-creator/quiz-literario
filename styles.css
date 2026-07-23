@@ -15,6 +15,8 @@
   --brand-hover: #5c3a26;
   --brand-ink: #f6ede0;   /* texto sobre o café */
   --terra: #a3421f;       /* terracota (destaques) */
+  --gold: #b08d3c;        /* dourado antigo (detalhes chiques) */
+  --gold-soft: rgba(176, 141, 60, 0.4);
   --border: #d2c2a8;      /* tan */
   --border-soft: rgba(210, 194, 168, 0.6);
   --shadow: 0 10px 24px -8px rgba(71, 43, 27, 0.22);
@@ -69,7 +71,9 @@ p { margin: 0 0 1em; }
 
 .grad {
   font-style: italic;
-  color: var(--terra);
+  background: linear-gradient(100deg, var(--terra) 0%, var(--gold) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: var(--terra);
 }
 
 /* ------- botões ------- */
@@ -111,20 +115,21 @@ p { margin: 0 0 1em; }
 .home { text-align: center; padding: 36px 4px 8px; }
 .home-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.3px;
-  color: var(--brand); background: rgba(71, 43, 27, 0.08);
-  border: 1px solid var(--border-soft);
-  padding: 7px 15px; border-radius: 999px; margin-bottom: 24px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+  color: var(--brand); background: rgba(176, 141, 60, 0.1);
+  border: 1px solid var(--gold-soft);
+  padding: 8px 16px; border-radius: 999px; margin-bottom: 24px;
 }
-.home h1 { font-size: 2.7rem; letter-spacing: -1.2px; margin-bottom: 18px; }
+.home h1 { font-size: 2.8rem; letter-spacing: -1.2px; margin-bottom: 18px; }
 .lead { font-size: 1.12rem; color: var(--ink); }
 .home .lead { max-width: 480px; margin: 0 auto 30px; color: var(--ink-soft); }
 .home-actions { display: flex; flex-direction: column; gap: 13px; max-width: 340px; margin: 0 auto 18px; }
 
 /* filete decorativo */
 .home h1::after {
-  content: ""; display: block; width: 54px; height: 2px;
-  background: var(--terra); margin: 18px auto 0; opacity: 0.7;
+  content: ""; display: block; width: 60px; height: 2px;
+  background: linear-gradient(90deg, var(--terra), var(--gold));
+  margin: 18px auto 0; border-radius: 2px;
 }
 
 /* =================== QUIZ =================== */
@@ -180,43 +185,78 @@ p { margin: 0 0 1em; }
 /* =================== RESULTADO =================== */
 .result-head { text-align: center; border-top: 5px solid var(--accent); }
 .result-emoji {
-  width: 74px; height: 74px; margin: 4px auto 10px;
+  width: 76px; height: 76px; margin: 4px auto 12px;
   display: grid; place-items: center;
   font-family: var(--serif); font-weight: 700; font-size: 2.2rem;
   border: 2px solid var(--accent); border-radius: 50%;
   background: var(--card);
+  box-shadow: 0 0 0 5px var(--card), 0 0 0 6px var(--gold-soft);
 }
 .result-name {
-  font-family: var(--serif); font-size: 2.9rem; font-weight: 700;
-  letter-spacing: -1px; margin: 4px 0 12px;
+  font-family: var(--serif); font-size: 3rem; font-weight: 700;
+  letter-spacing: -1px; margin: 6px 0 12px;
 }
-.result-tagline { font-family: var(--display); font-size: 1.4rem; font-weight: 600; font-style: italic; color: var(--terra); margin-bottom: 18px; }
-.result-description { font-size: 1.06rem; }
-.result-vibe {
-  font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--ink-soft);
-  border-left: 3px solid var(--accent); padding-left: 14px; text-align: left; margin: 20px 0;
+.result-line {
+  font-family: var(--display); font-size: 1.25rem; font-weight: 600; font-style: italic;
+  color: var(--terra); margin-bottom: 6px; line-height: 1.4;
 }
-.result-cinema { font-size: 0.96rem; text-align: left; color: var(--ink-soft); }
-.result-cinema strong { color: var(--ink); }
+
+/* "Sobre seu perfil" */
+.result-sobre { font-size: 1.04rem; margin-bottom: 4px; }
+.about-label {
+  font-family: var(--serif); font-weight: 700; font-size: 0.72rem; letter-spacing: 1.4px;
+  text-transform: uppercase; color: var(--gold); margin: 18px 0 4px;
+}
+.about-text { font-size: 0.98rem; color: var(--ink-soft); margin-bottom: 0; }
 
 .bars { display: flex; flex-direction: column; gap: 13px; }
-.bar-row { display: grid; grid-template-columns: 140px 1fr 46px; align-items: center; gap: 10px; font-size: 0.9rem; }
+.bar-row { display: grid; grid-template-columns: 120px 1fr 46px; align-items: center; gap: 10px; font-size: 0.9rem; }
 .bar-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 700; }
 .bar-track { height: 12px; background: var(--bg-soft); border: 1px solid var(--border-soft); border-radius: 999px; overflow: hidden; }
 .bar-fill { display: block; height: 100%; border-radius: 999px; transition: width 0.7s var(--ease); }
 .bar-pct { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
 
+/* filtro de fôlego */
+.folego { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0 20px; }
+.folego-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 11px 6px; cursor: pointer; text-align: center;
+  font-family: var(--sans); color: var(--ink); box-shadow: var(--shadow-sm);
+  transition: border-color 0.18s var(--ease), background 0.18s var(--ease), transform 0.12s var(--ease);
+}
+.folego-btn:active { transform: scale(0.97); }
+.folego-btn.active { border-color: var(--accent); border-width: 2px; background: var(--card); }
+.folego-label { font-family: var(--serif); font-weight: 700; font-size: 1rem; }
+.folego-btn.active .folego-label { color: var(--accent); }
+.folego-range { font-size: 0.72rem; color: var(--ink-soft); line-height: 1.2; }
+
+/* fichas de livro */
 .books { display: flex; flex-direction: column; gap: 15px; }
 .book-card {
   display: flex; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
   background: var(--bg); box-shadow: var(--shadow-sm);
 }
 .book-spine { flex: 0 0 9px; background: var(--accent); }
-.book-body { padding: 15px 17px; }
-.book-body h4 { font-size: 1.18rem; margin-bottom: 2px; }
-.book-author { display: block; font-size: 0.86rem; font-style: italic; margin-bottom: 9px; }
-.book-body p { font-size: 0.96rem; margin-bottom: 11px; color: var(--ink-soft); }
-.book-tag { display: inline-block; font-size: 0.74rem; font-weight: 700; border: 1px solid; border-radius: 999px; padding: 3px 11px; }
+.book-body { padding: 15px 17px; min-width: 0; flex: 1; }
+.book-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.book-body h4 { font-size: 1.16rem; margin-bottom: 2px; }
+.book-pages {
+  flex: 0 0 auto; font-size: 0.72rem; font-weight: 700; color: var(--gold);
+  background: rgba(176, 141, 60, 0.08); border: 1px solid var(--gold-soft);
+  border-radius: 999px; padding: 3px 10px; white-space: nowrap;
+}
+.book-author { display: block; font-size: 0.86rem; font-style: italic; margin: 2px 0 9px; }
+.book-tag { display: inline-block; font-size: 0.74rem; font-weight: 700; border: 1px solid; border-radius: 999px; padding: 3px 11px; margin-bottom: 10px; }
+.book-syn { font-size: 0.96rem; margin-bottom: 0; color: var(--ink-soft); }
+.book-syn.clamp {
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.book-more {
+  background: none; border: none; padding: 6px 0 0; margin: 0; cursor: pointer;
+  font-family: var(--sans); font-weight: 700; font-size: 0.84rem; color: var(--accent);
+}
+.book-more:active { opacity: 0.6; }
 
 .result-actions, .checkout-actions { display: flex; gap: 12px; }
 .result-actions { flex-wrap: wrap; }

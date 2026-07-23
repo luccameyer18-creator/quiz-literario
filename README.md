@@ -17,9 +17,17 @@ perguntas leves sobre o dia a dia (rolê, crush, treta, redes) e descobre seu
   só um nome) fica no fim (checkout), apenas para salvar no histórico.
 - **Histórico local** no próprio dispositivo (localStorage), sem enviar dados
   pra fora.
-- **Base de 50 livros**, 10 por perfil, filtrados por perfil + tempo de leitura
-  (curto / médio / longo).
-- **Dark mode** automático e layout mobile-first.
+- **Base de livros reconstruída a partir do app original** (Romântico,
+  Desbravador e Observador vêm de lá, com ano, número de páginas e sinopse).
+  Cada perfil tem um **filtro de fôlego** (curto / médio / longo) e a sinopse
+  abre/fecha ao toque, pra não deixar a ficha gigante no celular.
+- **Mobile-first**, pensado pro celular (é onde o público usa).
+
+> **Pendência:** os **textos dos 5 perfis** já são do app original. Só o
+> perfil **Cientista** ainda está com **livros provisórios** (marcado com
+> `PROVISÓRIO` no `data.js`) — assim que a lista dele chegar, é só substituir
+> aquele bloco. O jeito mais fiel de obter tudo de uma vez é pegar o arquivo
+> `.js` de dados do app original (F12 → Sources) num computador.
 
 ## Rodar localmente
 

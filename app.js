@@ -143,34 +143,23 @@ function computeResult() {
 /* --------------------- Recomendação dos livros -------------------------- */
 
 const STAMINA_LABEL = {
-  curto: "Leitura curta",
+  curto: "Leitura rápida",
   medio: "Leitura média",
   longo: "Leitura longa",
 };
-const STAMINA_ORDER = ["curto", "medio", "longo"];
+// Filtro de fôlego (como no app original): rótulo curto + faixa de páginas.
+const FOLEGO = [
+  { key: "curto", label: "Curto", range: "até 150 páginas" },
+  { key: "medio", label: "Médio", range: "150–250 páginas" },
+  { key: "longo", label: "Longo", range: "250+ páginas" },
+];
 
-function recommendBooks(profile, stamina, limit) {
-  limit = limit || 4;
-  const sameProfile = BOOKS.filter((b) => b.profile === profile);
-
-  // 1) mesmo perfil + mesmo fôlego de leitura
-  let picks = sameProfile.filter((b) => b.stamina === stamina);
-
-  // 2) completa com o fôlego mais próximo (mesmo perfil)
-  if (picks.length < limit) {
-    const near = STAMINA_ORDER
-      .slice()
-      .sort((a, b) => Math.abs(STAMINA_ORDER.indexOf(a) - STAMINA_ORDER.indexOf(stamina))
-                    - Math.abs(STAMINA_ORDER.indexOf(b) - STAMINA_ORDER.indexOf(stamina)));
-    near.forEach((st) => {
-      if (st === stamina) return;
-      sameProfile.filter((b) => b.stamina === st).forEach((b) => {
-        if (picks.length < limit && !picks.includes(b)) picks.push(b);
-      });
-    });
-  }
-
-  return shuffle(picks).slice(0, limit);
+// Todos os livros de um perfil, num fôlego. Se não houver nenhum naquele
+// fôlego, devolve todos do perfil (nunca deixa a lista vazia).
+function booksFor(profile, stamina) {
+  const same = BOOKS.filter((b) => b.profile === profile);
+  const picks = same.filter((b) => b.stamina === stamina);
+  return shuffle(picks.length ? picks : same);
 }
 
 /* ---------------------------- Checkout ---------------------------------- */
@@ -192,8 +181,8 @@ function finishCheckout(save) {
     const name = (el("checkout-name").value || "").trim();
     saveToHistory(name, result);
   }
-  renderResult(result);
   show("screen-result");
+  renderResult(result);
 }
 
 /* ---------------------------- Histórico --------------------------------- */
@@ -254,7 +243,10 @@ function clearHistory() {
 
 /* ---------------------------- Resultado --------------------------------- */
 
+let currentResult = null; // guardado pra o filtro de fôlego re-renderizar
+
 function renderResult(result) {
+  currentResult = result;
   const p = PROFILES[result.winner];
 
   document.documentElement.style.setProperty("--accent", p.color);
@@ -264,13 +256,11 @@ function renderResult(result) {
   el("result-emoji").style.borderColor = p.color;
   el("result-name").textContent = p.name;
   el("result-name").style.color = p.color;
-  el("result-tagline").textContent = p.tagline;
-  el("result-description").textContent = p.description;
-  el("result-vibe").textContent = p.vibe;
+  el("result-line").textContent = p.resultLine;
 
-  el("result-cinema").innerHTML =
-    `<strong>Se fosse cinema/série:</strong> ${p.cinema}<br>` +
-    `<span class="muted">Tipo: ${p.examples}</span>`;
+  el("result-sobre").textContent = p.sobre;
+  el("result-cinema").textContent = p.cinema;
+  el("result-examples").textContent = p.exemplos;
 
   // Barras de porcentagem (todos os perfis, ordenados)
   const bars = el("result-bars");
@@ -289,23 +279,66 @@ function renderResult(result) {
       bars.appendChild(row);
     });
 
-  // Livros indicados
-  const books = recommendBooks(result.winner, result.stamina, 4);
-  el("books-title").textContent =
-    `Livros pra você começar (${STAMINA_LABEL[result.stamina].toLowerCase()})`;
+  // Filtro de fôlego (começa na escolha do quiz)
+  renderFolego(result.stamina);
+  renderBooks(result.winner, result.stamina);
+}
+
+// Botões de fôlego (Curto / Médio / Longo). O escolhido no quiz já vem ativo.
+function renderFolego(active) {
+  const box = el("result-folego");
+  box.innerHTML = "";
+  FOLEGO.forEach((f) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "folego-btn" + (f.key === active ? " active" : "");
+    btn.innerHTML =
+      `<span class="folego-label">${f.label}</span>` +
+      `<span class="folego-range">${f.range}</span>`;
+    btn.addEventListener("click", () => {
+      renderFolego(f.key);
+      renderBooks(currentResult.winner, f.key);
+    });
+    box.appendChild(btn);
+  });
+}
+
+// Fichas dos livros: título, páginas, autor • ano, categoria e sinopse
+// (a sinopse abre/fecha ao toque, pra não deixar a ficha gigante no celular).
+function renderBooks(profile, stamina) {
+  const p = PROFILES[profile];
+  const books = booksFor(profile, stamina);
   const booksBox = el("result-books");
   booksBox.innerHTML = "";
   books.forEach((b) => {
+    const pages = b.pages ? `<span class="book-pages">${b.pages} páginas</span>` : "";
+    const meta = b.author + (b.year ? ` • ${b.year}` : "");
     const card = document.createElement("div");
     card.className = "book-card";
     card.innerHTML =
       `<div class="book-spine" style="background:${p.color}"></div>` +
       `<div class="book-body">` +
-        `<h4>${escapeHtml(b.title)}</h4>` +
-        `<span class="book-author muted">${escapeHtml(b.author)}</span>` +
-        `<p>${escapeHtml(b.blurb)}</p>` +
+        `<div class="book-head"><h4>${escapeHtml(b.title)}</h4>${pages}</div>` +
+        `<span class="book-author muted">${escapeHtml(meta)}</span>` +
         `<span class="book-tag" style="color:${p.color};border-color:${p.color}">${STAMINA_LABEL[b.stamina]}</span>` +
+        `<p class="book-syn clamp">${escapeHtml(b.synopsis)}</p>` +
+        `<button type="button" class="book-more">ler mais</button>` +
       `</div>`;
+    // botão abre/fecha a sinopse. Só aparece quando o texto é longo o bastante
+    // pra ser cortado (senão vira botão inútil em sinopse curta).
+    const syn = card.querySelector(".book-syn");
+    const more = card.querySelector(".book-more");
+    requestAnimationFrame(() => {
+      const overflowing = syn.scrollHeight - syn.clientHeight > 4;
+      if (!overflowing) {
+        syn.classList.remove("clamp");
+        more.style.display = "none";
+      }
+    });
+    more.addEventListener("click", () => {
+      const clamped = syn.classList.toggle("clamp");
+      more.textContent = clamped ? "ler mais" : "ler menos";
+    });
     booksBox.appendChild(card);
   });
 }
@@ -322,7 +355,6 @@ function escapeHtml(str) {
 
 document.addEventListener("DOMContentLoaded", () => {
   el("btn-start").addEventListener("click", startQuiz);
-  el("btn-start-2").addEventListener("click", startQuiz);
   el("btn-history").addEventListener("click", renderHistory);
   el("btn-prev").addEventListener("click", prevQuestion);
   el("btn-next").addEventListener("click", nextQuestion);
