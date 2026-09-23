@@ -1,0 +1,451 @@
+<title>Pra Luiza</title>
+<meta name="description" content="Um pedido de desculpas e uma declaração de amor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Caveat:wght@500;700&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --ground: #0a1230;
+    --ground-2: #1a2a5c;
+    --rose: #f2a7bd;
+    --rose-deep: #c9587c;
+    --gold: #f3d38a;
+    --ink: #eef0fa;
+    --muted: #9aa6cf;
+    --cat: #050916;
+    --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+  }
+  [hidden] { display: none !important; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: radial-gradient(120% 90% at 50% 110%, var(--ground-2) 0%, var(--ground) 60%) fixed, var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #sky { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  main {
+    position: relative;
+    height: 100%;
+    display: grid;
+    place-items: safe center;
+    overflow-y: auto;
+    padding: 28px 20px 96px;
+    box-sizing: border-box;
+  }
+  .scene {
+    grid-area: 1 / 1;
+    width: 100%;
+    max-width: 34rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    transition: opacity .9s ease, transform .9s ease;
+  }
+  .scene.out { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+
+  .ln { margin: 0; font-size: clamp(1.25rem, 4.6vw, 1.6rem); line-height: 1.4; text-wrap: balance;
+        opacity: 0; transform: translateY(10px); filter: blur(4px);
+        transition: opacity 1.1s ease, transform 1.1s ease, filter 1.1s ease; }
+  .ln.on { opacity: 1; transform: none; filter: none; }
+  .ln.small { font-size: clamp(1.05rem, 3.8vw, 1.25rem); color: var(--muted); font-style: italic; }
+  .hand { font-family: var(--hand); color: var(--rose); font-size: clamp(2.6rem, 11vw, 4rem); line-height: 1.05; }
+  .big { font-family: var(--hand); color: var(--gold); font-size: clamp(3rem, 13vw, 5rem); line-height: 1;
+         text-shadow: 0 0 28px rgba(243,201,122,.35); }
+  .sign { font-family: var(--hand); color: var(--rose); font-size: 2rem; }
+
+  .cover .ln { opacity: 1; transform: none; filter: none; }
+  .seal {
+    width: 92px; height: 92px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #e47a98, var(--rose-deep) 60%, #8a2c47);
+    display: grid; place-items: center;
+    box-shadow: 0 6px 30px rgba(194,88,119,.45), inset 0 -4px 10px rgba(0,0,0,.25);
+    animation: beat 1.6s ease-in-out infinite;
+  }
+  .seal svg { width: 44px; fill: #fbe3ea; }
+  @keyframes beat { 0%,100% { transform: scale(1); } 15% { transform: scale(1.08); } 30% { transform: scale(.98); } 45% { transform: scale(1.05); } }
+
+  button { font: inherit; cursor: pointer; }
+  .btn {
+    border: 1px solid rgba(242,167,189,.55);
+    background: rgba(242,167,189,.08);
+    color: var(--ink);
+    padding: .7rem 1.8rem;
+    border-radius: 999px;
+    font-size: 1.15rem;
+    letter-spacing: .04em;
+    transition: background .3s, transform .2s, opacity .8s;
+  }
+  .btn:hover { background: rgba(242,167,189,.18); }
+  .btn:active { transform: scale(.96); }
+  .btn:focus-visible, .music-btn:focus-visible, .panel a:focus-visible, .panel label:focus-within { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .btn.primary { background: var(--rose-deep); border-color: var(--rose-deep); color: #fff; }
+  .btn.primary:hover { background: #d8698d; }
+  .next { opacity: 0; pointer-events: none; margin-top: .8rem; }
+  .next.on { opacity: 1; pointer-events: auto; }
+
+  .chapter { margin: 0; font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); opacity: .85; }
+  .chapter i { font-style: normal; color: var(--muted); letter-spacing: .12em; }
+  .quote { font-style: italic; color: var(--muted); }
+
+  /* gatinho nos livros */
+  .cat { position: fixed; left: 12px; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); width: clamp(64px, 16vw, 96px); z-index: 1; pointer-events: none; overflow: visible; }
+  .cat .tail { transform-origin: 70px 104px; animation: tail 3.2s ease-in-out infinite; }
+  .cat .eyes { transform-origin: 50px 38px; animation: blink 5s infinite; }
+  @keyframes tail { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-14deg); } }
+  @keyframes blink { 0%,92%,100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+  .cat.happy .eyes { animation: none; transform: scaleY(.35); }
+  .cat .love { opacity: 0; transition: opacity .8s, transform .8s; transform: translateY(6px); }
+  .cat.happy .love { opacity: 1; transform: none; }
+
+  /* coração remendado */
+  .heart { width: min(52vw, 200px); overflow: visible; }
+  .half { transition: transform 2.2s cubic-bezier(.2,.8,.2,1); }
+  .heart .l { transform: translate(-16px, 6px) rotate(-10deg); transform-origin: 50px 90px; }
+  .heart .r { transform: translate(16px, 6px) rotate(10deg); transform-origin: 50px 90px; }
+  .heart.mend .l, .heart.mend .r { transform: none; }
+  .heart path.body { fill: var(--rose-deep); }
+  .stitch { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 90; stroke-dashoffset: 90; transition: stroke-dashoffset 1.6s ease 2s; }
+  .heart.mend .stitch { stroke-dashoffset: 0; }
+  .glow { opacity: 0; transition: opacity 1.5s ease 3.4s; }
+  .heart.mend .glow { opacity: 1; }
+
+  /* pergunta */
+  .choices { position: relative; width: 100%; height: 150px; }
+  .choices .btn { position: absolute; top: 50%; transform: translate(-50%, -50%); transition: left .35s ease, top .35s ease, background .3s; }
+  .choices .btn:active { transform: translate(-50%, -50%) scale(.96); }
+  #yes { left: 35%; }
+  #no { left: 65%; }
+
+  /* música */
+  .music {
+    position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; z-index: 5;
+  }
+  .music-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 1px solid rgba(242,167,189,.45);
+    background: rgba(10,18,48,.75); color: var(--rose);
+    display: grid; place-items: center; font-size: 1.3rem;
+    backdrop-filter: blur(6px);
+  }
+  .music-btn.playing { animation: spin 6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .panel {
+    background: rgba(10,18,48,.92); border: 1px solid rgba(242,167,189,.3);
+    border-radius: 14px; padding: .9rem 1rem; width: min(270px, calc(100vw - 32px)); box-sizing: border-box;
+    display: flex; flex-direction: column; gap: .55rem; font-size: 1.05rem;
+    backdrop-filter: blur(8px);
+  }
+  .panel h2 { margin: 0; font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .panel a, .panel label { color: var(--ink); text-decoration: none; cursor: pointer; display: flex; gap: .5rem; align-items: baseline; }
+  .panel a:hover, .panel label:hover { color: var(--gold); }
+  .panel .now { color: var(--gold); font-style: italic; }
+  .panel input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seal, .music-btn.playing, .cat .tail, .cat .eyes { animation: none; }
+    .ln, .scene, .half, .stitch, .glow { transition-duration: .01s !important; transition-delay: 0s !important; }
+  }
+</style>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<main>
+  <!-- CAPA -->
+  <section class="scene cover" data-scene="0">
+    <div class="seal" aria-hidden="true">
+      <svg viewBox="0 0 100 92"><path d="M50 88C20 65 5 45 5 28 5 14 16 5 28 5c10 0 18 6 22 15 4-9 12-15 22-15 12 0 23 9 23 23 0 17-15 37-45 60z"/></svg>
+    </div>
+    <p class="chapter">um livro pequeno, escrito pra</p>
+    <p class="ln hand">Dra. Luiza,</p>
+    <p class="ln">a mulher que conquistou meu coração.</p>
+    <p class="ln small">Aumenta o som e abre.</p>
+    <button class="btn primary" id="open">Abrir o livro</button>
+  </section>
+
+  <!-- CAPÍTULO I -->
+  <section class="scene out" data-scene="1" hidden>
+    <p class="chapter">Capítulo I <i>· O erro</i></p>
+    <p class="ln small">Antes de qualquer coisa…</p>
+    <p class="ln hand">me desculpa.</p>
+    <p class="ln">Eu errei com você, e você não merecia isso.</p>
+    <p class="ln">Não vou inventar desculpa pra minha desculpa.</p>
+    <p class="ln">Só quero que você saiba que eu entendi, e que vou fazer diferente.</p>
+    <button class="btn next">virar a página</button>
+  </section>
+
+  <!-- CAPÍTULO II -->
+  <section class="scene out" data-scene="2" hidden>
+    <p class="chapter">Capítulo II <i>· O conserto</i></p>
+    <svg class="heart" viewBox="-10 -10 120 115" aria-hidden="true">
+      <defs>
+        <clipPath id="cl"><polygon points="-10,-10 50,-10 46,20 54,35 45,50 55,65 50,105 -10,105"/></clipPath>
+        <clipPath id="cr"><polygon points="50,-10 110,-10 110,105 50,105 55,65 45,50 54,35 46,20"/></clipPath>
+        <radialGradient id="g"><stop offset="0" stop-color="#f3d38a" stop-opacity=".5"/><stop offset="1" stop-color="#f3d38a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle class="glow" cx="50" cy="48" r="62" fill="url(#g)"/>
+      <g class="half l"><path class="body" clip-path="url(#cl)" d="M50 88C20 65 5 45 5 28 5 14 16 5 28 5c10 0 18 6 22 15 4-9 12-15 22-15 12 0 23 9 23 23 0 17-15 37-45 60z"/></g>
+      <g class="half r"><path class="body" clip-path="url(#cr)" d="M50 88C20 65 5 45 5 28 5 14 16 5 28 5c10 0 18 6 22 15 4-9 12-15 22-15 12 0 23 9 23 23 0 17-15 37-45 60z"/></g>
+      <path class="stitch" d="M46 20 L54 35 L45 50 L55 65 L50 86 M44 26 l6 -2 M47 42 l6 -2 M47 58 l6 -2 M47 74 l6 -2"/>
+    </svg>
+    <p class="ln">Sei que um pedido de desculpas não conserta tudo sozinho…</p>
+    <p class="ln">mas eu tô aqui pra costurar cada pedacinho, com calma, do jeito certo.</p>
+    <button class="btn next">virar a página</button>
+  </section>
+
+  <!-- CAPÍTULO III -->
+  <section class="scene out" data-scene="3" hidden>
+    <p class="chapter">Capítulo III <i>· A verdade</i></p>
+    <p class="ln quote">“Amor é fogo que arde sem se ver.” Camões já sabia. Eu só entendi com você.</p>
+    <p class="ln big">eu te amo, Luiza.</p>
+    <p class="ln">Amo esses teus cachos lindos, esses olhos escuros que me atravessam inteiro, tua risada, o jeito que você fala com os gatos.</p>
+    <p class="ln">Você é doutora em literatura, e mesmo assim não existe palavra que dê conta do que eu sinto por você.</p>
+    <p class="ln">Você é o amor da minha vida, e eu não quero te perder por besteira minha.</p>
+    <button class="btn next">virar a página</button>
+  </section>
+
+  <!-- CAPÍTULO IV -->
+  <section class="scene out" data-scene="4" hidden>
+    <p class="chapter">Capítulo IV <i>· A pergunta</i></p>
+    <p class="ln small">Então…</p>
+    <p class="ln hand">me perdoa?</p>
+    <div class="choices ln">
+      <button class="btn primary" id="yes">Sim</button>
+      <button class="btn" id="no">Não</button>
+    </div>
+  </section>
+
+  <!-- EPÍLOGO -->
+  <section class="scene out" data-scene="5" hidden>
+    <p class="chapter">Epílogo</p>
+    <p class="ln hand">Eu sabia.</p>
+    <p class="ln big">Te amo, minha Luiza.</p>
+    <p class="ln">Prometo cuidar melhor de você. Todo dia.</p>
+    <p class="ln small">Fim? Não. Esse livro a gente ainda tá escrevendo junto.</p>
+    <p class="ln sign">— Lucca</p>
+    <button class="btn" id="again">ler de novo</button>
+  </section>
+</main>
+
+<svg class="cat" id="cat" viewBox="0 0 110 142" aria-hidden="true">
+  <!-- pilha de livros -->
+  <rect x="8" y="112" width="94" height="10" rx="2" fill="#c9587c"/>
+  <rect x="14" y="122" width="86" height="9" rx="2" fill="#f3d38a"/>
+  <rect x="4" y="131" width="100" height="10" rx="2" fill="#3b4f96"/>
+  <line x1="18" y1="117" x2="92" y2="117" stroke="#0a1230" stroke-opacity=".35"/>
+  <line x1="22" y1="126.5" x2="90" y2="126.5" stroke="#0a1230" stroke-opacity=".35"/>
+  <!-- gato -->
+  <path class="tail" d="M70 106 C92 108 100 88 90 72" fill="none" stroke="var(--cat)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M30 112 C24 82 30 58 50 56 C70 58 76 82 70 112 Z" fill="var(--cat)" stroke="rgba(154,166,207,.35)" stroke-width="1"/>
+  <path d="M32 30 L30 8 L46 20 Z M68 30 L70 8 L54 20 Z" fill="var(--cat)" stroke="rgba(154,166,207,.35)" stroke-width="1"/>
+  <circle cx="50" cy="38" r="20" fill="var(--cat)" stroke="rgba(154,166,207,.35)" stroke-width="1"/>
+  <g class="eyes" fill="#f3d38a">
+    <ellipse cx="43" cy="38" rx="2.8" ry="3.6"/><ellipse cx="57" cy="38" rx="2.8" ry="3.6"/>
+  </g>
+  <path d="M48.5 44 L50 45.5 L51.5 44" fill="none" stroke="#f2a7bd" stroke-width="1.2" stroke-linecap="round"/>
+  <path class="love" d="M50 16 C44 11 40 8 40 4.5 40 2 42 0.5 44 0.5 c2 0 4 1.5 6 3.5 c2-2 4-3.5 6-3.5 c2 0 4 1.5 4 4 0 3.5-4 6.5-10 11.5z" fill="#f2a7bd"/>
+</svg>
+
+<div class="music">
+  <div class="panel" id="panel" hidden>
+    <h2>Trilha</h2>
+    <span class="now" id="now">Caixinha de música</span>
+    <label for="file">＋ Escolher música do celular<input type="file" id="file" accept="audio/*"></label>
+    <a href="https://open.spotify.com/search/Per%20Amore%20Zizi%20Possi" target="_blank" rel="noopener">♪ Per Amore no Spotify</a>
+    <a href="https://open.spotify.com/search/Karol%20G%20Si%20Antes%20Te%20Hubiera%20Conocido" target="_blank" rel="noopener">♪ Karol G no Spotify</a>
+  </div>
+  <button class="music-btn" id="musicBtn" aria-label="Música" aria-expanded="false">♪</button>
+</div>
+
+<audio id="track" loop preload="none"></audio>
+
+<script>
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- céu com corações ---------- */
+  const cv = document.getElementById("sky"), cx = cv.getContext("2d");
+  const HEART = new Path2D("M50 88C20 65 5 45 5 28 5 14 16 5 28 5c10 0 18 6 22 15 4-9 12-15 22-15 12 0 23 9 23 23 0 17-15 37-45 60z");
+  let W, H, dpr, stars = [], hearts = [], burst = [];
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = Array.from({ length: Math.round(W * H / 9000) }, () => ({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.2 + .2, p: Math.random() * 6.28 }));
+  }
+  size(); addEventListener("resize", size);
+  const colors = ["#f2a7bd", "#c9587c", "#f3d38a", "#eef0fa"];
+  function spawn(x, y, burstMode) {
+    const a = Math.random() * 6.28, v = burstMode ? 2 + Math.random() * 5 : 0;
+    return {
+      x: x ?? Math.random() * W, y: y ?? H + 20,
+      vx: burstMode ? Math.cos(a) * v : (Math.random() - .5) * .3,
+      vy: burstMode ? Math.sin(a) * v - 2 : -(.3 + Math.random() * .6),
+      s: (burstMode ? 8 : 6) + Math.random() * 12, rot: (Math.random() - .5) * .6,
+      c: colors[Math.random() * colors.length | 0], life: 1, sway: Math.random() * 6.28, burst: burstMode
+    };
+  }
+  function drawHeart(h) {
+    cx.save();
+    cx.translate(h.x, h.y); cx.rotate(h.rot);
+    const k = h.s / 100; cx.scale(k, k); cx.translate(-50, -46);
+    cx.globalAlpha = Math.max(0, h.life) * (h.burst ? .9 : .35);
+    cx.fillStyle = h.c; cx.fill(HEART);
+    cx.restore();
+  }
+  let t = 0, intensity = 1;
+  function frame() {
+    t += 1 / 60;
+    cx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      cx.globalAlpha = .25 + .35 * Math.sin(t * 1.3 + s.p) ** 2;
+      cx.fillStyle = "#eef0fa";
+      cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.28); cx.fill();
+    }
+    const mx = W * .86, my = 46, mr = Math.min(W, H) * .03 + 12;
+    cx.globalAlpha = 1; cx.fillStyle = "#f3d38a"; cx.shadowColor = "rgba(243,211,138,.6)"; cx.shadowBlur = 24;
+    cx.beginPath(); cx.arc(mx, my, mr, 0, 6.28); cx.fill(); cx.shadowBlur = 0;
+    cx.fillStyle = "#0a1230"; cx.beginPath(); cx.arc(mx + mr * .42, my - mr * .22, mr * .88, 0, 6.28); cx.fill();
+    if (!reduce && hearts.length < 14 * intensity && Math.random() < .03 * intensity) hearts.push(spawn());
+    hearts = hearts.filter(h => h.y > -40);
+    for (const h of hearts) { h.sway += .02; h.x += h.vx + Math.sin(h.sway) * .3; h.y += h.vy; drawHeart(h); }
+    burst = burst.filter(h => h.life > 0);
+    for (const h of burst) { h.vy += .08; h.vx *= .99; h.x += h.vx; h.y += h.vy; h.rot += .02; h.life -= .007; drawHeart(h); }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  function explode(x = W / 2, y = H / 2, n = 90) { for (let i = 0; i < n; i++) burst.push(spawn(x, y, true)); }
+
+  /* ---------- caixinha de música (melodia original, WebAudio) ---------- */
+  let ac, master, timer, nextT = 0, step = 0, synthOn = false;
+  const mtof = m => 440 * 2 ** ((m - 69) / 12);
+  const chords = [[53, 57, 60], [50, 53, 57], [46, 50, 53], [48, 52, 55]];   // F, Dm, Bb, C
+  const melody = [[72, 0], [69, 2], [72, 4], [74, 6], [72, 8], [69, 10], [65, 12],
+                  [70, 16], [69, 18], [65, 20], [62, 22], [64, 24], [65, 26], [67, 28]];
+  const BEAT = 60 / 70 / 2;  // colcheia a 70 bpm
+  function bell(freq, at, dur, vol) {
+    const o = ac.createOscillator(), o2 = ac.createOscillator(), g = ac.createGain();
+    o.type = "sine"; o2.type = "triangle";
+    o.frequency.value = freq; o2.frequency.value = freq * 2;
+    const g2 = ac.createGain(); g2.gain.value = .18;
+    o.connect(g); o2.connect(g2).connect(g); g.connect(master);
+    g.gain.setValueAtTime(0, at);
+    g.gain.linearRampToValueAtTime(vol, at + .012);
+    g.gain.exponentialRampToValueAtTime(.0001, at + dur);
+    o.start(at); o2.start(at); o.stop(at + dur + .05); o2.stop(at + dur + .05);
+  }
+  function schedule() {
+    while (nextT < ac.currentTime + .4) {
+      const bar = Math.floor(step / 8) % 4, i = step % 8, c = chords[bar];
+      const arp = [c[0], c[1], c[2], c[0] + 12, c[2], c[1], c[0] + 12, c[2]];
+      bell(mtof(arp[i] + 12), nextT, 1.6, .09);
+      const pos = step % 32;
+      for (const [m, p] of melody) if (p === pos) bell(mtof(m + 12), nextT, 2.4, .13);
+      nextT += BEAT; step++;
+    }
+  }
+  function startSynth() {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (!master) {
+      master = ac.createGain(); master.gain.value = .6;
+      const delay = ac.createDelay(), fb = ac.createGain(), wet = ac.createGain();
+      delay.delayTime.value = BEAT * 3; fb.gain.value = .35; wet.gain.value = .3;
+      master.connect(ac.destination);
+      master.connect(delay); delay.connect(fb).connect(delay); delay.connect(wet).connect(ac.destination);
+    }
+    ac.resume();
+    if (!timer) { nextT = ac.currentTime + .1; timer = setInterval(schedule, 100); }
+    synthOn = true;
+  }
+  function stopSynth() { clearInterval(timer); timer = null; synthOn = false; if (ac) ac.suspend(); }
+
+  /* ---------- música: arquivo próprio > musica.mp3 ao lado > caixinha ---------- */
+  const track = document.getElementById("track"), musicBtn = document.getElementById("musicBtn"),
+        panel = document.getElementById("panel"), now = document.getElementById("now");
+  let mode = null;  // "track" | "synth"
+  function setPlaying(p) { musicBtn.classList.toggle("playing", p); }
+  function startMusic() {
+    track.src = "musica.mp3";
+    track.play().then(() => { mode = "track"; now.textContent = "Nossa música"; setPlaying(true); })
+      .catch(() => { mode = "synth"; startSynth(); setPlaying(true); });
+  }
+  musicBtn.addEventListener("click", () => {
+    panel.hidden = !panel.hidden;
+    musicBtn.setAttribute("aria-expanded", String(!panel.hidden));
+  });
+  now.addEventListener("click", () => {
+    if (mode === "track") { track.paused ? track.play() : track.pause(); setPlaying(!track.paused); }
+    else if (synthOn) { stopSynth(); setPlaying(false); }
+    else { mode = "synth"; startSynth(); setPlaying(true); }
+  });
+  now.style.cursor = "pointer"; now.title = "tocar / pausar";
+  document.getElementById("file").addEventListener("change", e => {
+    const f = e.target.files[0]; if (!f) return;
+    stopSynth();
+    track.src = URL.createObjectURL(f);
+    track.play().then(() => { mode = "track"; setPlaying(true); now.textContent = f.name.replace(/\.[^.]+$/, ""); }).catch(() => {});
+  });
+
+  /* ---------- cenas ---------- */
+  const scenes = [...document.querySelectorAll(".scene")];
+  let cur = 0, timers = [];
+  function show(n) {
+    timers.forEach(clearTimeout); timers = [];
+    const from = scenes[cur], to = scenes[n];
+    from.classList.add("out");
+    timers.push(setTimeout(() => {
+      from.hidden = true;
+      from.querySelectorAll(".ln, .next").forEach(e => e.classList.remove("on"));
+      to.hidden = false;
+      requestAnimationFrame(() => to.classList.remove("out"));
+      cur = n;
+      const lines = [...to.querySelectorAll(".ln")];
+      const gap = reduce ? 0 : 1500;
+      const heart = to.querySelector(".heart");
+      const lead = heart ? (reduce ? 0 : 3800) : 300;
+      if (heart) { heart.classList.remove("mend"); requestAnimationFrame(() => requestAnimationFrame(() => heart.classList.add("mend"))); }
+      lines.forEach((l, i) => timers.push(setTimeout(() => l.classList.add("on"), lead + i * gap)));
+      const nx = to.querySelector(".next");
+      if (nx) timers.push(setTimeout(() => nx.classList.add("on"), lead + lines.length * gap + 400));
+      if (n === 3) timers.push(setTimeout(() => { intensity = 2.2; }, lead + gap));
+      if (n === 5) timers.push(setTimeout(() => explode(W / 2, H * .45, 70), lead + gap));
+    }, reduce ? 50 : 900));
+  }
+  document.getElementById("open").addEventListener("click", () => { startMusic(); explode(W / 2, H / 2, 30); show(1); });
+  document.querySelectorAll(".next").forEach(b => b.addEventListener("click", () => show(cur + 1)));
+  document.getElementById("again").addEventListener("click", () => { intensity = 1; resetNo(); document.getElementById("cat").classList.remove("happy"); show(1); });
+
+  /* ---------- "Não" foge ---------- */
+  const yes = document.getElementById("yes"), no = document.getElementById("no"), box = no.parentElement;
+  const noTexts = ["Não", "tem certeza?", "pensa bem…", "olha o coraçãozinho", "não vale", "clica no outro", "😢"];
+  let tries = 0;
+  function resetNo() { tries = 0; no.textContent = "Não"; no.style.left = ""; no.style.top = ""; yes.style.fontSize = ""; }
+  function flee(e) {
+    if (e) e.preventDefault();
+    tries++;
+    no.textContent = noTexts[Math.min(tries, noTexts.length - 1)];
+    const bw = box.clientWidth, bh = box.clientHeight;
+    const x = 12 + Math.random() * 76, y = 12 + Math.random() * 76;
+    no.style.left = x + "%"; no.style.top = y + "%";
+    yes.style.fontSize = Math.min(1.15 + tries * .12, 2) + "rem";
+  }
+  no.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") flee(); });
+  no.addEventListener("pointerdown", flee);
+  no.addEventListener("click", flee);
+  yes.addEventListener("click", e => {
+    const r = yes.getBoundingClientRect();
+    explode(r.left + r.width / 2, r.top + r.height / 2, 120);
+    document.getElementById("cat").classList.add("happy");
+    show(5);
+  });
+})();
+</script>
