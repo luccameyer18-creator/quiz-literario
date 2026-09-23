@@ -130,6 +130,17 @@
   .panel .now { color: var(--gold); font-style: italic; }
   .panel input[type=file] { position: absolute; width: 1px; height: 1px; opacity: 0; }
 
+  /* modo story (luiza.html#story): passa sozinho, 9:16, fora das áreas cobertas pelo Instagram */
+  body.story .music, body.story .btn { display: none !important; }
+  body.story main { padding: 15% 22px 29%; }
+  body.story .cat { bottom: 14.5%; left: 18px; width: 76px; }
+  body.story .scene { gap: .85rem; }
+  body.story .ln { font-size: 1.2rem; }
+  body.story .ln.small { font-size: 1.05rem; }
+  body.story .hand { font-size: 2.45rem; }
+  body.story .big { font-size: 2.9rem; }
+  body.story .cover .small { display: none; }
+
   @media (prefers-reduced-motion: reduce) {
     .seal, .music-btn.playing, .cat .tail, .cat .eyes { animation: none; }
     .ln, .scene { transition-duration: .01s !important; transition-delay: 0s !important; }
@@ -143,7 +154,7 @@
   <section class="scene cover" data-scene="0">
     <div class="seal" aria-hidden="true"><span>L</span></div>
     <p class="chapter">um livro pequeno, escrito pra</p>
-    <p class="ln hand">Dra. Luiza,</p>
+    <p class="ln hand">Luiza,</p>
     <p class="ln">a mulher que conquistou meu coração.</p>
     <p class="ln small">Aumenta o som e abre.</p>
     <button class="btn primary" id="open">Abrir o livro</button>
@@ -163,7 +174,8 @@
   <!-- CAPÍTULO II -->
   <section class="scene out" data-scene="2" hidden>
     <p class="chapter">Capítulo II <i>· O mundo dela</i></p>
-    <p class="ln">Ela é doutora em literatura.</p>
+    <p class="ln">Ela é mestra em literatura,</p>
+    <p class="ln small">e tá fazendo o doutorado. Logo, logo: doutora.</p>
     <p class="ln">Gosta de gatos.</p>
     <p class="ln">E a cor preferida dela é azul meia-noite,</p>
     <p class="ln hand">a cor desse céu inteiro.</p>
@@ -223,7 +235,9 @@
 
 <script>
 (() => {
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const story = location.hash === "#story";
+  if (story) document.body.classList.add("story");
+  const reduce = !story && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- céu com corações ---------- */
   const cv = document.getElementById("sky"), cx = cv.getContext("2d");
@@ -245,7 +259,7 @@
       cx.globalAlpha = .2 + .5 * Math.sin(t * 1.1 + s.p) ** 2;
       cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.28); cx.fill();
     }
-    const mx = W * .86, my = 46, mr = Math.min(W, H) * .03 + 12;
+    const mx = W * .86, my = story ? H * .16 : 46, mr = Math.min(W, H) * .03 + 12;
     cx.globalAlpha = 1; cx.fillStyle = "#f3d38a"; cx.shadowColor = "rgba(243,211,138,.6)"; cx.shadowBlur = 24;
     cx.beginPath(); cx.arc(mx, my, mr, 0, 6.28); cx.fill(); cx.shadowBlur = 0;
     cx.fillStyle = "#0a1230"; cx.beginPath(); cx.arc(mx + mr * .42, my - mr * .22, mr * .88, 0, 6.28); cx.fill();
@@ -367,12 +381,14 @@
       lines.forEach((l, i) => timers.push(setTimeout(() => l.classList.add("on"), lead + i * gap)));
       const nx = to.querySelector(".next");
       if (nx) timers.push(setTimeout(() => nx.classList.add("on"), lead + lines.length * gap + 400));
+      if (story && n < scenes.length - 1) timers.push(setTimeout(() => show(n + 1), lead + lines.length * gap + 2600));
       if (n === 2) timers.push(setTimeout(() => cat.classList.add("happy"), lead + gap));
       if (n === 3) timers.push(setTimeout(() => { intensity = 3; }, lead + gap));
       if (n === 4) timers.push(setTimeout(() => explode(W / 2, H * .4, 140), lead));
     }, reduce ? 50 : 900));
   }
   document.getElementById("open").addEventListener("click", () => { startMusic(); show(1); });
+  if (story) window.startStory = () => show(1);
   document.querySelectorAll(".next").forEach(b => b.addEventListener("click", () => show(cur + 1)));
   document.getElementById("again").addEventListener("click", () => { intensity = 1; cat.classList.remove("happy"); show(1); });
 
